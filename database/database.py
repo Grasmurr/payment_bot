@@ -17,6 +17,7 @@ class Database:
                             "subject VARCHAR(128) NOT NULL,"
                             "order_details TEXT,"
                             "order_id VARCHAR(64),"
+                            "work_type TEXT,"
                             "message_id VARCHAR(64))")
 
         self.cursor.execute("CREATE TABLE IF NOT EXISTS "
@@ -39,6 +40,14 @@ class Database:
                             "chats (chat_id INTEGER PRIMARY KEY AUTOINCREMENT, "
                             "chat_one VARHCAR(64) NOT NULL, "
                             "chat_two VARHCAR(64) NOT NULL)")
+
+        # Новая таблица с информацией о заказах
+        self.cursor.execute("CREATE TABLE IF NOT EXISTS "
+                            "order_info (order_id VARCHAR(64) PRIMARY KEY, "
+                            "customer_id VARCHAR(64) NOT NULL, "
+                            "performer_id VARCHAR(64) NOT NULL, "
+                            "price INTEGER NOT NULL, "
+                            "days INTEGER NOT NULL)")
 
         self.base.commit()
 

@@ -10,19 +10,18 @@ main_menu.add(help_button)
 
 
 # inline keyboard markup
-user_inkb = InlineKeyboardMarkup(row_width=1)
+user_inkb = ReplyKeyboardMarkup(resize_keyboard=True)
 
-become_client = InlineKeyboardButton(text="Хочу купить работу",
-                                     callback_data='become client')
-become_performer = InlineKeyboardButton(text="Хочу стать вашим исполнителем",
-                                        callback_data='become performer')
-become_other = InlineKeyboardButton(text="Другое",
-                                    callback_data='become other')
+become_client = KeyboardButton(text="Хочу купить работу")
+become_performer = KeyboardButton(text="Хочу стать вашим исполнителем")
+become_other = KeyboardButton(text="Другое")
 cancel_button = InlineKeyboardButton(text="Отмена",
                                      callback_data='cancel')
 
 cancel_inkb = InlineKeyboardMarkup().add(cancel_button)
-user_inkb.add(become_client, become_performer, become_other)
+user_inkb.add(become_client)
+user_inkb.add(become_performer)
+user_inkb.add(become_other)
 
 subjects_dict = {
     "test": -1001674582859,
@@ -75,3 +74,33 @@ async def send_performer_suggestion(client_id, text):
     suggestion_inkb.add(accept_button, deny_button)
     # № знак номера
     await bot.send_message(text=text, reply_markup=suggestion_inkb, chat_id=client_id)
+
+
+def work_type_keyboard():
+    keyboard = InlineKeyboardMarkup(row_width=1)
+
+    buttons = [
+        "Презентация", "Транскрипт или кодировка", "Доклад",
+        "Аналитическая записка", "Эссе", "Решение задач",
+        "Реферат", "Рецензия", ">>"
+
+    ]
+
+    for button_text in buttons:
+        keyboard.add(InlineKeyboardButton(text=button_text, callback_data=f"work_type:{button_text}"))
+
+    return keyboard
+
+
+def work_type_keyboard_2():
+    keyboard = InlineKeyboardMarkup(row_width=1)
+    buttons = [
+        "Тест", "Контрольная работа",
+        "Кейс", "Курсовая работа", "Другое", "Бакалаврский диплом",
+        "Магистерская диссертация", "Другая ВКР", "<<"
+    ]
+
+    for button_text in buttons:
+        keyboard.add(InlineKeyboardButton(text=button_text, callback_data=f"work_type:{button_text}"))
+    return keyboard
+
